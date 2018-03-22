@@ -1,0 +1,8 @@
+.background {
+  position: absolute;
+  display: block;
+  background-color: #22192f;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
