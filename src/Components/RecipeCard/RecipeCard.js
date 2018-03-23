@@ -12,14 +12,30 @@ class RecipeCard extends Component {
       expand: false,
       name: this.props.name,
       ingredients: this.props.ingredients,
-      steps: this.props.steps
+      steps: this.props.steps,
+      img: this.props.image
     }
 
   }
   render() {
     return (
       <div>
-        <h1>{this.props.name}</h1>
+        <Card>
+          <CardHeader
+            title={this.state.name}
+            actAsExpander={true}
+            showExpandableButton={true} />
+          <CardMedia
+            expandable={true}
+          >
+            <img src={this.state.img} style={{width: '50%', height:'50%'}} />
+          </CardMedia>
+          <CardText expandable={true}>
+          <ul>
+            {this.state.ingredients}
+          </ul>
+          </CardText>
+        </Card>
       </div>
     );
   }

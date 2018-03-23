@@ -59,24 +59,30 @@ class Dashboard extends Component {
   }
 
   /**
-  Make a call to our backend to get collection of recipes
+  Make a call to our backend to get collection of recipes based on our keyword
   **/
   getRecipes(){
-    var url = 'http://localhost:8080/recipes';
+
+    var url = 'http://localhost:8080/recipes' + "?keyword=" + this.state.input;
+
     fetch(url)
       .then(data => {
         return data.json();
       }).then(results => {
         let recipes = results.map((recipe) => {
+
           var name = recipe.name;
-          var ingredientList = [];
-          let ingredients = recipe.ingredients.map((item) => {
-            ingredientList = [...ingredientList, item.quantity + " " + item.name]
-          })
           var steps = recipe.steps;
-          console.log(name)
+          var image = recipe.imageurl;
+
+          let ingredients = recipe.ingredients.map((item) => {
+            return (
+              <ul> {item.quantity + " " + item.name} </ul>
+            )
+          })
+
           return(
-            <RecipeCard name={name} ingredients={ingredientList} steps={steps} />
+            <RecipeCard name={name} ingredients={ingredients} steps={steps} image={image}/>
           )
         })
 
@@ -94,7 +100,7 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <canvas className="background"></canvas>
         <AppBar
-        title="Find Me A Recipe"
+        title="Find Me a Recipe"
         showMenuIconButton= {false}
         titleStyle = {{
           color: 'black',
