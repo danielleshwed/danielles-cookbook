@@ -3,12 +3,24 @@ import Particles from 'particlesjs';
 import './dashboard.css';
 
 import AppBar from 'material-ui/AppBar';
-import UserInput from '../UserInput/UserInput'
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import RecipeCard from '../RecipeCard/RecipeCard';
 
 class Dashboard extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
+    this.state = {
+      input: '',
+      criteria: [],
+      recipes: ''
+    }
+    this.handleClick = this.handleClick.bind(this);
+    this.updateInput = this.updateInput.bind(this);
+    this.getRecipes = this.getRecipes.bind(this);
   }
 
   componentDidMount(){
@@ -23,21 +35,96 @@ class Dashboard extends Component {
     };
   }
 
+  /**
+  When "Find Recipes" button is clicked, add search criteria to state and call GetRecipes()
+  to scrape job sites for jobs that match our criteria
+  **/
+  handleClick(){
+    var jobCriteria = this.state.input.split(";");
+
+     this.setState({
+       criteria: [...this.state.criteria, ...jobCriteria]
+     })
+
+     this.getRecipes();
+  }
+
+  /**
+  When text field input is changed, change input state
+  **/
+  updateInput(e,input){
+    this.setState({
+      input: input
+    })
+  }
+
+  /**
+  Make a call to our backend to get collection of recipes
+  **/
+  getRecipes(){
+    var url = 'http://localhost:8080/recipes';
+    fetch(url)
+      .then(data => {
+        return data.json();
+      }).then(results => {
+        let recipes = results.map((recipe) => {
+          var name = recipe.name;
+          var ingredientList = [];
+          let ingredients = recipe.ingredients.map((item) => {
+            ingredientList = [...ingredientList, item.quantity + " " + item.name]
+          })
+          var steps = recipe.steps;
+          console.log(name)
+          return(
+            <RecipeCard name={name} ingredients={ingredientList} steps={steps} />
+          )
+        })
+
+        this.setState({
+          recipes: recipes
+        })
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <div className="Dashboard">
         <canvas className="background"></canvas>
         <AppBar
-        title="Find Me A Job"
+        title="Find Me A Recipe"
         showMenuIconButton= {false}
-        titleStyle = {{color: 'black'}}
+        titleStyle = {{
+          color: 'black',
+          textAlign: 'left'
+        }}
         style={{
           backgroundColor: 'white',
         }}
         >
-        </AppBar>
+        <TextField
+        multiLine = {false}
+        hintText = "key ingredients"
+        onChange = {this.updateInput}
+        style={{
+          marginTop: '5px',
+        }}
+        >
+        </TextField>
 
-        <UserInput />
+        <RaisedButton
+        label="Find Recipes!"
+        onClick = {this.handleClick}
+        style={{
+          marginTop: '8px',
+          marginBottom: '20px'
+        }} />
+        </AppBar>
+        <div>
+          {this.state.recipes}
+        </div>
       </div>
 
     );
