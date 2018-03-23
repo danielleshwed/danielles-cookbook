@@ -1,8 +1,11 @@
 .background {
   position: absolute;
-  display: block;
+  width: 100vw;
+  height: 100vh;
   background-color: #22192f;
   top: 0;
   left: 0;
   z-index: -1;
+
+
 }

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Particles from 'particlesjs';
-import './dashboard.css';
 
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
@@ -24,15 +22,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount(){
-    window.onload = function() {
-      Particles.init({
-        selector: '.background',
-        connectParticles: true,
-        random: true,
-        color: '#ecf0f1',
-        speed: 0.6,
-      });
-    };
+    document.body.style = 'background: #22192f;'
   }
 
   /**
@@ -62,13 +52,15 @@ class Dashboard extends Component {
   Make a call to our backend to get collection of recipes based on our keyword
   **/
   getRecipes(){
-
     var url = 'http://localhost:8080/recipes' + "?keyword=" + this.state.input;
 
     fetch(url)
       .then(data => {
         return data.json();
       }).then(results => {
+        this.setState({
+          recipes: ''
+        })
         let recipes = results.map((recipe) => {
 
           var name = recipe.name;
@@ -89,6 +81,7 @@ class Dashboard extends Component {
         this.setState({
           recipes: recipes
         })
+
       })
       .catch(function(error){
         console.log(error);
@@ -98,7 +91,6 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="Dashboard">
-        <canvas className="background"></canvas>
         <AppBar
         title="Find Me a Recipe"
         showMenuIconButton= {false}
