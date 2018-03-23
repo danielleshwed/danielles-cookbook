@@ -66,6 +66,7 @@ class Dashboard extends Component {
           var name = recipe.name;
           var steps = recipe.steps;
           var image = recipe.imageurl;
+          var descr = recipe.description;
 
           let ingredients = recipe.ingredients.map((item) => {
             return (
@@ -74,7 +75,7 @@ class Dashboard extends Component {
           })
 
           return(
-            <RecipeCard name={name} ingredients={ingredients} steps={steps} image={image}/>
+            <RecipeCard name={name} ingredients={ingredients} steps={steps} image={image} description={descr}/>
           )
         })
 
