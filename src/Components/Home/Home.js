@@ -15,7 +15,6 @@ class Home extends Component {
   When Get Started is Clicked, go to main page of Cookbook
   **/
   handleClick(){
-    console.log(this.props)
     this.props.history.push("/home");
   }
 
@@ -57,7 +56,9 @@ class Home extends Component {
             <RaisedButton
             label="Get Started"
             style={{
-              backgroundColor: '#22192f'
+              backgroundColor: '#22192f',
+              display: 'flex',
+              justifyContent: 'center'
             }}
             onClick={this.handleClick}/>
           </CardActions>

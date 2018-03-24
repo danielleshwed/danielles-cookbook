@@ -24,7 +24,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount(){
-    document.body.style = 'background: #22192f;'
+    document.body.style = 'background: #00BCD4;'
   }
 
   /**

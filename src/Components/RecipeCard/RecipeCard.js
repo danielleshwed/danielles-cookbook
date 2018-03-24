@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 
 import { getDetails } from './actions';
@@ -39,6 +39,7 @@ class RecipeCard extends Component {
             paddingBottom: '10px',
             paddingTop: '10px',
             marginTop: '10px',
+            fontFamily: "Roboto"
           }}>
           <CardHeader
             title={this.state.name}
@@ -78,9 +79,16 @@ class RecipeCard extends Component {
           </CardText>
           <CardActions
             expandable={true}>
-            <FlatButton
+            <RaisedButton
               label="Get Details"
-              onClick = {() => getDetails(this.state.name, this.state.desc, this.state.ingredients, this.state.steps, this.state.img)}/>
+              onClick = {() => getDetails(this.state.name, this.state.desc, this.state.ingredients, this.state.steps, this.state.img)}
+              backgroundColor = '#00BCD4'
+              labelStyle = {{color: 'white'}}
+              style={{
+                margin: '0 auto',
+                display: 'flex',
+                width: '20%'
+              }}/>
           </CardActions>
         </Card>
       </div>
