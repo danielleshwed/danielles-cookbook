@@ -4,6 +4,9 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 
+import { getDetails } from './actions';
+import { connect } from 'react-redux';
+
 class RecipeCard extends Component {
   constructor(props){
     super(props);
@@ -18,7 +21,15 @@ class RecipeCard extends Component {
     }
   }
 
+  componentDidUpdate(nextProps) {
+
+    if(this.props.redirect){
+      this.props.history.push("/details")
+    }
+  }
+
   render() {
+    const { getDetails } = this.props;
     return (
       <div>
         <Card
@@ -40,21 +51,55 @@ class RecipeCard extends Component {
             }}
             subtitleStyle={{
               textAlign: 'left'
-            }} />
+            }}
+            style={{
+              textAlign: 'left'
+            }}/>
           <CardMedia
             expandable={true}
           >
             <img src={this.state.img} style={{height:'50%'}} />
           </CardMedia>
-          <CardText expandable={true}>
-          <ul>
-            {this.state.ingredients}
-          </ul>
+          <CardText
+            expandable={true}
+            style={{
+              textAlign: 'left',
+              paddingLeft: '185px'
+            }}
+            >
+            <h3
+            style={{
+              textAlign: 'left',
+              paddingLeft: '80px'
+            }}>Ingredients</h3>
+            <ul>
+              {this.state.ingredients}
+            </ul>
           </CardText>
+          <CardActions
+            expandable={true}>
+            <FlatButton
+              label="Get Details"
+              onClick = {() => getDetails(this.state.name, this.state.desc, this.state.ingredients, this.state.steps, this.state.img)}/>
+          </CardActions>
         </Card>
       </div>
     );
   }
 }
 
-export default RecipeCard;
+export function mapDispatchToProps(dispatch){
+  return {
+    getDetails: (name, desc, ingredients, steps, img) => dispatch(getDetails(name, desc, ingredients, steps, img))
+  }
+}
+
+function mapStateToProps(state) {
+  return{
+    input: state.recipeReducer.input,
+    redirect: state.recipeReducer.redirect
+
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(RecipeCard);

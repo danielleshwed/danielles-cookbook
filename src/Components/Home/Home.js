@@ -4,12 +4,10 @@ import './home.css';
 
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
 
 class Home extends Component {
   constructor(){
     super();
-
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -17,7 +15,8 @@ class Home extends Component {
   When Get Started is Clicked, go to main page of Cookbook
   **/
   handleClick(){
-    browserHistory.push("/home");
+    console.log(this.props)
+    this.props.history.push("/home");
   }
 
   /**
@@ -34,7 +33,7 @@ class Home extends Component {
       });
     };
   }
-  
+
   render() {
     return (
       <div className="Home">

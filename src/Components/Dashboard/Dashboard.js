@@ -5,19 +5,21 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
+import { handleClick, updateInput, getRecipes } from './actions';
 
 class Dashboard extends Component {
 
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = {
       input: '',
       criteria: [],
       recipes: ''
     }
     this.handleClick = this.handleClick.bind(this);
-    this.updateInput = this.updateInput.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
   }
 
@@ -30,30 +32,21 @@ class Dashboard extends Component {
   to scrape job sites for jobs that match our criteria
   **/
   handleClick(){
-    var jobCriteria = this.state.input.split(";");
-
-     this.setState({
-       criteria: [...this.state.criteria, ...jobCriteria]
-     })
+    // var jobCriteria = this.state.input.split(";");
+    //
+    //  this.setState({
+    //    criteria: [...this.state.criteria, ...jobCriteria]
+    //  })
 
      this.getRecipes();
-  }
-
-  /**
-  When text field input is changed, change input state
-  **/
-  updateInput(e,input){
-    this.setState({
-      input: input
-    })
   }
 
   /**
   Make a call to our backend to get collection of recipes based on our keyword
   **/
   getRecipes(){
-    var url = 'http://localhost:8080/recipes' + "?keyword=" + this.state.input;
-
+    const { input } = this.props;
+    var url = 'http://localhost:8080/recipes' + "?keyword=" + this.props.input;
     fetch(url)
       .then(data => {
         return data.json();
@@ -75,7 +68,7 @@ class Dashboard extends Component {
           })
 
           return(
-            <RecipeCard name={name} ingredients={ingredients} steps={steps} image={image} description={descr}/>
+            <RecipeCard history={this.props.history} name={name} ingredients={ingredients} steps={steps} image={image} description={descr}/>
           )
         })
 
@@ -90,6 +83,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    const {updateInput} = this.props;
     return (
       <div className="Dashboard">
         <AppBar
@@ -106,7 +100,7 @@ class Dashboard extends Component {
         <TextField
         multiLine = {false}
         hintText = "key ingredients"
-        onChange = {this.updateInput}
+        onChange = {(e,input) => updateInput(e,input)}
         style={{
           marginTop: '5px',
         }}
@@ -130,4 +124,16 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export function mapDispatchToProps(dispatch){
+  return {
+    updateInput: (e,input) => dispatch(updateInput(e,input))
+  }
+}
+
+function mapStateToProps(state) {
+  return{
+    input: state.dashboardReducer.input
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);
