@@ -19,15 +19,22 @@ class RecipeCard extends Component {
       img: this.props.image,
       desc: this.props.description
     }
-
   }
 
+  /**
+  If redirect flag is true, go to details page
+  This happens after action has been dispatched
+  **/
   componentDidMount() {
     if(this.props.redirect){
       this.props.history.push("/details")
     }
   }
 
+  /**
+  Set redirect flag to false so we dont jump straight
+  to /details when we come back to this page
+  **/
   componentWillReceiveProps(nextProps) {
       if(nextProps.redirect){
         nextProps.history.push("/details")

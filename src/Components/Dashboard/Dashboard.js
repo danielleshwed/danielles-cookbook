@@ -28,6 +28,9 @@ class Dashboard extends Component {
     this.rerouteToAddRecipe = this.rerouteToAddRecipe.bind(this);
   }
 
+  /**
+  When hitting back button to dashboard page, get recipes from props
+  **/
   componentDidMount() {
     document.body.style = 'background: #00BCD4;'
     this.setState({
@@ -35,6 +38,9 @@ class Dashboard extends Component {
     })
   }
 
+  /**
+  When add recipe button is clicked, route to /addRecipe page
+  **/
   rerouteToAddRecipe() {
     this.props.history.push('/addRecipe');
   }
@@ -77,7 +83,7 @@ class Dashboard extends Component {
             <RecipeCard name={name} ingredients={ingredients} steps={steps} image={image} description={descr}/>
           )
         })
-        
+
         if(recipes.length == 0){
           recipes = <Paper
             zDepth={2}

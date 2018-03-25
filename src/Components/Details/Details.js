@@ -5,22 +5,22 @@ import { withRouter } from 'react-router';
 
 class Details extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-
     this.state = {
       steps: ''
     }
-
     this.listifySteps = this.listifySteps.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.listifySteps();
   }
 
-  listifySteps(){
-    console.log(this.props.steps)
+  /**
+  Configure Steps to display as an ordered list instead of in one text block
+  **/
+  listifySteps() {
     let listSteps = this.props.steps.map((step) =>{
       return (
         <ol
@@ -29,11 +29,12 @@ class Details extends Component {
           paddingRight: '10px'
         }}> {step} </ol>
       )
-    })
+    });
 
     this.setState({
       steps: listSteps
-    })
+    });
+
   }
 
   render() {
