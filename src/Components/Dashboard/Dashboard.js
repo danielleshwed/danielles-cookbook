@@ -6,8 +6,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
 import { connect } from 'react-redux';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import { updateInput, saveRecipes } from './actions';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
 
 class Dashboard extends Component {
 
@@ -104,7 +107,7 @@ class Dashboard extends Component {
         >
         <TextField
         multiLine = {false}
-        hintText = "key ingredients"
+        hintText = "key ingredient"
         onChange = {(e,input) => updateInput(e,input)}
         style={{
           marginTop: '5px',
@@ -113,9 +116,19 @@ class Dashboard extends Component {
         </TextField>
 
         <RaisedButton
-        label="Find Recipes!"
+        label="Find Recipes"
+        backgroundColor = '#00BCD4'
+        labelStyle = {{color: 'white'}}
         onClick = {this.handleClick}
         style={{
+          marginTop: '8px',
+          marginBottom: '20px'
+        }} />
+        <RaisedButton
+        label="Add a Recipe"
+        onClick = {this.handleClick}
+        style={{
+          marginLeft: '10px',
           marginTop: '8px',
           marginBottom: '20px'
         }} />

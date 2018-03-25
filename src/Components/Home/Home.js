@@ -48,8 +48,7 @@ class Home extends Component {
           width: '250px',
           height: '150px',
           paddingTop: '10px'
-        }}
-        >
+        }}>
           <CardTitle
             title="Danielle's Cookbook"/>
           <CardActions>

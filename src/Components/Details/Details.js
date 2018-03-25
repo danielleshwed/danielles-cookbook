@@ -33,7 +33,9 @@ class Details extends Component {
             paddingTop: '10px',
             color: '#424242'
           }}>Ingredients</h4>
-          {this.props.ingredients}
+          <ul style={{paddingRight: '85px'}}>
+            {this.props.ingredients}
+          </ul>
           <h4 style={{
             paddingTop: '10px',
             color: '#424242'
