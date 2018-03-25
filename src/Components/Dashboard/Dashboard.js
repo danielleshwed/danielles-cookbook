@@ -68,7 +68,7 @@ class Dashboard extends Component {
           })
 
           return(
-            <RecipeCard history={this.props.history} name={name} ingredients={ingredients} steps={steps} image={image} description={descr}/>
+            <RecipeCard name={name} ingredients={ingredients} steps={steps} image={image} description={descr}/>
           )
         })
 

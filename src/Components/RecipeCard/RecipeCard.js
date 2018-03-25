@@ -4,8 +4,9 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 
-import { getDetails } from './actions';
+import { getDetails, redirectBrowser } from './actions';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class RecipeCard extends Component {
   constructor(props){
@@ -19,13 +20,20 @@ class RecipeCard extends Component {
       img: this.props.image,
       desc: this.props.description
     }
+
   }
 
-  componentDidUpdate(nextProps) {
-
+  componentDidMount() {
     if(this.props.redirect){
       this.props.history.push("/details")
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+       if(nextProps.redirect){
+        nextProps.history.push("/details")
+      }
+      this.props.redirectBrowser();
   }
 
   render() {
@@ -98,7 +106,8 @@ class RecipeCard extends Component {
 
 export function mapDispatchToProps(dispatch){
   return {
-    getDetails: (name, desc, ingredients, steps, img) => dispatch(getDetails(name, desc, ingredients, steps, img))
+    getDetails: (name, desc, ingredients, steps, img) => dispatch(getDetails(name, desc, ingredients, steps, img)),
+    redirectBrowser: () => dispatch(redirectBrowser())
   }
 }
 
@@ -110,4 +119,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(RecipeCard);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(RecipeCard));

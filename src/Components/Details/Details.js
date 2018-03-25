@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
+import { withRouter } from 'react-router';
 
 class Details extends Component {
 
@@ -37,10 +38,7 @@ class Details extends Component {
             paddingTop: '10px',
             color: '#424242'
           }}>Ingredients</h4>
-          <p
-          style={{
-            paddingRight: '40px'
-          }}>{this.props.ingredients}</p>
+          {this.props.ingredients}
           <h4 style={{
             paddingTop: '10px',
             color: '#424242'
@@ -71,4 +69,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Details);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Details));

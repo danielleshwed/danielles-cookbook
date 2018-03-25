@@ -1,4 +1,4 @@
-import { GET_DETAILS } from './actions';
+import { GET_DETAILS, REDIRECT } from './actions';
 
 
 const initialState = {
@@ -22,9 +22,14 @@ function recipeReducer(state = initialState, action) {
         img: action.data.img,
         redirect: true
       })
+      case REDIRECT:
+        return Object.assign({}, state, {
+          redirect: false
+      })
     default:
       return state;
   }
 }
+
 
 export default recipeReducer;
