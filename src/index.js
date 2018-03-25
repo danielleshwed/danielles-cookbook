@@ -18,6 +18,7 @@ import { Route, Router } from 'react-router';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Home from './Components/Home/Home'
 import Details from './Components/Details/Details'
+import AddRecipePage from './Components/AddRecipePage/AddRecipePage'
 
 const rootReducer = combineReducers({
   dashboardReducer,
@@ -38,6 +39,7 @@ ReactDOM.render(
           <Route exact path='/' component={Home} />
           <Route exact path='/home' component={Dashboard} />
           <Route exact path='/details' component={Details} />
+          <Route exact path='/addRecipe' component={AddRecipePage} />
         </div>
       </Router>
       </Provider>

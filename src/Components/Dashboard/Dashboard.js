@@ -12,6 +12,8 @@ import { updateInput, saveRecipes } from './actions';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 
+import Paper from 'material-ui/Paper';
+
 class Dashboard extends Component {
 
   constructor(props) {
@@ -23,34 +25,32 @@ class Dashboard extends Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
+    this.rerouteToAddRecipe = this.rerouteToAddRecipe.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.body.style = 'background: #00BCD4;'
     this.setState({
       recipes: this.props.recipes
     })
   }
 
+  rerouteToAddRecipe() {
+    this.props.history.push('/addRecipe');
+  }
 
   /**
   When "Find Recipes" button is clicked, add search criteria to state and call GetRecipes()
-  to scrape job sites for jobs that match our criteria
+  to pull recipes from backend
   **/
-  handleClick(){
-    // var jobCriteria = this.state.input.split(";");
-    //
-    //  this.setState({
-    //    criteria: [...this.state.criteria, ...jobCriteria]
-    //  })
-
+  handleClick() {
      this.getRecipes();
   }
 
   /**
   Make a call to our backend to get collection of recipes based on our keyword
   **/
-  getRecipes(){
+  getRecipes() {
     const { input, saveRecipes } = this.props;
     var url = 'http://localhost:8080/recipes' + "?keyword=" + this.props.input;
     fetch(url)
@@ -77,6 +77,20 @@ class Dashboard extends Component {
             <RecipeCard name={name} ingredients={ingredients} steps={steps} image={image} description={descr}/>
           )
         })
+        
+        if(recipes.length == 0){
+          recipes = <Paper
+            zDepth={2}
+            style={{
+              height: '100%',
+              width: '50%',
+              margin: 20,
+              textAlign: 'center',
+              paddingTop: '20px',
+              paddingBottom: '20px',
+              margin: '0 auto',
+          }}> No Recipes to Display</Paper>
+        }
 
         this.setState({
           recipes: recipes
@@ -126,7 +140,7 @@ class Dashboard extends Component {
         }} />
         <RaisedButton
         label="Add a Recipe"
-        onClick = {this.handleClick}
+        onClick = {this.rerouteToAddRecipe}
         style={{
           marginLeft: '10px',
           marginTop: '8px',

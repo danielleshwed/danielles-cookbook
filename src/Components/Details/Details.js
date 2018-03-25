@@ -5,6 +5,37 @@ import { withRouter } from 'react-router';
 
 class Details extends Component {
 
+  constructor(props){
+    super(props);
+
+    this.state = {
+      steps: ''
+    }
+
+    this.listifySteps = this.listifySteps.bind(this);
+  }
+
+  componentDidMount(){
+    this.listifySteps();
+  }
+
+  listifySteps(){
+    console.log(this.props.steps)
+    let listSteps = this.props.steps.map((step) =>{
+      return (
+        <ol
+          style={{
+          paddingLeft: '10px',
+          paddingRight: '10px'
+        }}> {step} </ol>
+      )
+    })
+
+    this.setState({
+      steps: listSteps
+    })
+  }
+
   render() {
     const { input, name, desc, ingredients, img, steps } = this.props;
     return (
@@ -40,12 +71,7 @@ class Details extends Component {
             paddingTop: '10px',
             color: '#424242'
           }}>Steps</h4>
-          <p
-            style={{
-              paddingLeft: '10px',
-              paddingRight: '10px'
-            }}
-          >{this.props.steps}</p>
+        <p>{this.state.steps}</p>
         </Paper>
       </div>
     );
