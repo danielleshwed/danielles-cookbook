@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Particles from 'particlesjs';
 import './home.css';
 
-import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class Home extends Component {

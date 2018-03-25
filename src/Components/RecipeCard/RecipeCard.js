@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-import Toggle from 'material-ui/Toggle';
 
 import { getDetails, redirectBrowser } from './actions';
 import { connect } from 'react-redux';
@@ -30,7 +29,7 @@ class RecipeCard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-       if(nextProps.redirect){
+      if(nextProps.redirect){
         nextProps.history.push("/details")
       }
       this.props.redirectBrowser();
@@ -67,7 +66,7 @@ class RecipeCard extends Component {
           <CardMedia
             expandable={true}
           >
-            <img src={this.state.img} style={{height:'50%'}} />
+            <img alt='' src={this.state.img} style={{height:'50%'}} />
           </CardMedia>
           <CardText
             expandable={true}
@@ -104,7 +103,7 @@ class RecipeCard extends Component {
   }
 }
 
-export function mapDispatchToProps(dispatch){
+export function mapDispatchToProps(dispatch) {
   return {
     getDetails: (name, desc, ingredients, steps, img) => dispatch(getDetails(name, desc, ingredients, steps, img)),
     redirectBrowser: () => dispatch(redirectBrowser())

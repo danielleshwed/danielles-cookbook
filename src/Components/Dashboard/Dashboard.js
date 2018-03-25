@@ -6,9 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
-import { handleClick, updateInput, getRecipes } from './actions';
+import { updateInput, saveRecipes } from './actions';
 
 class Dashboard extends Component {
 
@@ -25,7 +24,11 @@ class Dashboard extends Component {
 
   componentDidMount(){
     document.body.style = 'background: #00BCD4;'
+    this.setState({
+      recipes: this.props.recipes
+    })
   }
+
 
   /**
   When "Find Recipes" button is clicked, add search criteria to state and call GetRecipes()
@@ -45,7 +48,7 @@ class Dashboard extends Component {
   Make a call to our backend to get collection of recipes based on our keyword
   **/
   getRecipes(){
-    const { input } = this.props;
+    const { input, saveRecipes } = this.props;
     var url = 'http://localhost:8080/recipes' + "?keyword=" + this.props.input;
     fetch(url)
       .then(data => {
@@ -76,6 +79,8 @@ class Dashboard extends Component {
           recipes: recipes
         })
 
+        saveRecipes(recipes);
+
       })
       .catch(function(error){
         console.log(error);
@@ -83,7 +88,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {updateInput} = this.props;
+    const { updateInput } = this.props;
     return (
       <div className="Dashboard">
         <AppBar
@@ -126,13 +131,15 @@ class Dashboard extends Component {
 
 export function mapDispatchToProps(dispatch){
   return {
-    updateInput: (e,input) => dispatch(updateInput(e,input))
+    updateInput: (e,input) => dispatch(updateInput(e,input)),
+    saveRecipes: (recipes) => dispatch(saveRecipes(recipes))
   }
 }
 
 function mapStateToProps(state) {
   return{
-    input: state.dashboardReducer.input
+    input: state.dashboardReducer.input,
+    recipes: state.dashboardReducer.recipes
   }
 }
 

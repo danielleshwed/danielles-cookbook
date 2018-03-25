@@ -5,11 +5,6 @@ import { withRouter } from 'react-router';
 
 class Details extends Component {
 
-  constructor(props){
-    super(props);
-    console.log(this.props)
-  }
-
   render() {
     const { input, name, desc, ingredients, img, steps } = this.props;
     return (
