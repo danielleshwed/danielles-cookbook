@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 import { withRouter } from 'react-router';
 
@@ -14,14 +15,17 @@ class AddRecipeForm extends Component {
     this.state = {
       name: '',
       description: '',
+      ingredients: [],
       quantity: '',
       ingredientName: '',
       steps: '',
-      imageurl: ''
+      imageurl: '',
+      ingredientNumber: ['']
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.addRecipe = this.addRecipe.bind(this);
+    this.addIngredient = this.addIngredient.bind(this);
   }
 
   /**
@@ -33,6 +37,14 @@ class AddRecipeForm extends Component {
     });
   }
 
+
+  addIngredient() {
+    this.setState({
+      ingredientNumber: [...this.state.ingredientNumber, ''],
+      ingredients: [...this.state.ingredients, {quantity: this.state.quantity, name: this.state.ingredientName}]
+    })
+  }
+
   /**
   On click of "add" button, POST request to backend to append recipe to
   recipes.json then route to home
@@ -40,7 +52,7 @@ class AddRecipeForm extends Component {
   addRecipe() {
     var recipe = { name: this.state.name,
                    description: this.state.description,
-                   ingredients: [{ quantity: this.state.quantity, name: this.state.ingredientName }],
+                   ingredients: [...this.state.ingredients, {quantity: this.state.quantity, name: this.state.ingredientName}],
                    steps: [this.state.steps],
                    imageurl: this.state.imageurl };
 
@@ -89,21 +101,34 @@ class AddRecipeForm extends Component {
                 label="description"
                 onChange = {this.handleChange("description")}
               /><br />
-              <TextField
-                floatingLabelText="Ingredient Quantity"
-                hintText="1kg"
-                label="quantity"
-                onChange = {this.handleChange("quantity")}
-              /><br />
-              <TextField
-                floatingLabelText="Ingredient Name"
-                hintText="Short Ribs"
-                label="ingredientName"
-                onChange = {this.handleChange("ingredientName")}
-              /><br />
+              <div className="ingredients">
+                {this.state.ingredientNumber.map((obj) =>
+                  <div>
+                  <TextField
+                    floatingLabelText="Ingredient Quantity"
+                    hintText="1kg"
+                    label="quantity"
+                    onChange = {this.handleChange("quantity")}
+                  /><br />
+                  <TextField
+                    floatingLabelText="Ingredient Name"
+                    hintText="Short Ribs"
+                    label="ingredientName"
+                    onChange = {this.handleChange("ingredientName")}
+                  /><br /></div>
+              )}
+              </div>
+              <FlatButton
+                label="Add Ingredient"
+                onClick = {this.addIngredient}
+                style={{
+                  marginTop: '10px',
+                  marginBottom: '10px'
+                }}
+              />
               <h3>Steps</h3>
               <TextField
-                hintText="Steps seperated by ;"
+                hintText="Step 1, Step 2..."
                 multiLine={true}
                 label="steps"
                 onChange = {this.handleChange("steps")}
